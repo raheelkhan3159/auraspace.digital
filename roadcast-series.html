@@ -1,0 +1,532 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadcast Series - Aura Space</title>
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
+    <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
+    <style>
+        .roadcast-wrap {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 120px 20px;
+            color: var(--primary);
+            font-family: var(--font-family-2);
+        }
+        .roadcast-block { margin-top: 80px; border-top: 1px solid var(--accent-color-3); padding-top: 40px; }
+        .roadcast-kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .roadcast-dot { width: 6px; height: 6px; background: var(--accent-color); display: inline-block; }
+        .roadcast-kicker span { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-color); font-weight: 500; }
+        .roadcast-title {
+            font-family: var(--font-family-1);
+            font-size: clamp(46px, 9vw, 88px);
+            line-height: .95;
+            letter-spacing: .04em;
+            margin: 0;
+            text-transform: uppercase;
+            color: var(--primary);
+        }
+        .roadcast-divider { width: 64px; height: 4px; background: var(--accent-color); margin: 12px 0 14px; }
+        .roadcast-intro { max-width: 700px; color: var(--text-color); font-size: 16px; line-height: 1.5; text-transform: uppercase; }
+        .roadcast-feature { border: 1px solid var(--accent-color-3); border-radius: 0; overflow: hidden; margin-top: 20px; box-shadow: 0 0 28px rgba(229, 9, 20, .28); background: var(--accent-color-5); }
+        .roadcast-media { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+        .roadcast-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+        .roadcast-media:hover img { transform: scale(1.05); }
+        .roadcast-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,0) 45%); }
+        .roadcast-play {
+            position: absolute; inset: 0; margin: auto; width: 74px; height: 74px; border: 0; border-radius: 50%;
+            background: var(--accent-color); color: var(--primary); font-size: 24px; cursor: pointer; z-index: 2;
+            display: inline-flex; align-items: center; justify-content: center; transition: transform .2s ease;
+        }
+        .roadcast-play:hover { transform: scale(1.08); }
+        .roadcast-badge { position: absolute; top: 12px; left: 12px; display: flex; gap: 8px; z-index: 2; }
+        .roadcast-badge span, .roadcast-time {
+            font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; padding: 4px 8px; border-radius: 4px;
+        }
+        .roadcast-badge .dark { background: rgba(0,0,0,.78); color: var(--primary); border: 1px solid rgba(255,255,255,.16); }
+        .roadcast-badge .red { background: var(--accent-color); color: var(--primary); }
+        .roadcast-time { position: absolute; right: 12px; bottom: 12px; background: rgba(0,0,0,.78); color: var(--primary); border: 1px solid rgba(255,255,255,.16); z-index: 2; }
+        .roadcast-meta { display: flex; gap: 14px; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; padding: 20px; background: var(--accent-color-5); border-top: 1px solid var(--accent-color-3); }
+        .roadcast-meta small { color: var(--accent-color); font-weight: 700; letter-spacing: .05em; }
+        .roadcast-meta h3 { margin: 4px 0 0; color: var(--primary); font-size: clamp(18px, 2vw, 24px); line-height: 1.25; text-transform: uppercase; }
+        .roadcast-actions { display: flex; gap: 8px; }
+        .roadcast-pill { border: 1px solid var(--accent-color-3); color: var(--primary); background: var(--accent-color-3); border-radius: 0; padding: 10px 16px; font-size: 14px; font-family: var(--font-family-2); }
+        .roadcast-grid { display: grid; gap: 20px; }
+        .roadcast-grid-2 { grid-template-columns: 1fr; }
+        .roadcast-card { background: var(--accent-color-5); border: 1px solid var(--accent-color-3); border-radius: 0; padding: 20px; }
+        .roadcast-card h4 { margin: 6px 0; color: var(--primary); text-transform: uppercase; }
+        .roadcast-card p { margin: 0; color: var(--text-color); font-size: 16px; line-height: 1.5; }
+        .roadcast-attr { display: grid; grid-template-columns: repeat(1, minmax(0,1fr)); gap: 10px; margin-top: 10px; }
+        .roadcast-attr .roadcast-card span { color: var(--accent-color); font-size: 13px; font-weight: 700; text-transform: uppercase; display: inline-block; margin-bottom: 6px; }
+        .roadcast-episode { display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--accent-color-3); background: var(--accent-color-5); border-radius: 0; }
+        .roadcast-episode-media { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 6px; overflow: hidden; }
+        .roadcast-episode-media img { width: 100%; height: 100%; object-fit: cover; }
+        .roadcast-episode-content h4 { margin: 8px 0; color: var(--primary); text-transform: uppercase; font-size: 22px; line-height: 1.2; }
+        .roadcast-episode-content p { margin: 0; color: var(--text-color); font-size: 16px; line-height: 1.5; }
+        .roadcast-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 14px; text-transform: uppercase; color: var(--text-color); }
+        .roadcast-row .highlight { color: var(--accent-color); font-weight: 700; }
+        .roadcast-submeta { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--accent-color-3); font-size: 14px; color: var(--text-color); display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .roadcast-team { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+        .roadcast-member { padding: 10px; background: var(--accent-color-5); border: 1px solid var(--accent-color-3); border-radius: 0; }
+        .roadcast-member figure { margin: 0 0 8px; aspect-ratio: 4/5; border-radius: 6px; overflow: hidden; }
+        .roadcast-member figure img { width: 100%; height: 100%; object-fit: cover; }
+        .roadcast-member small { color: var(--accent-color); text-transform: uppercase; font-size: 11px; font-weight: 700; }
+        .roadcast-member h5 { color: var(--primary); margin: 6px 0 4px; font-size: 21px; line-height: 1.2; text-transform: uppercase; }
+        .roadcast-member p { color: var(--text-color); margin: 0; font-size: 14px; line-height: 1.5; }
+        .roadcast-cta { margin-top: 80px; background: var(--accent-color); border-radius: 0; padding: 30px 20px; color: var(--primary); position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 16px; }
+        .roadcast-cta::after { content: "AURA"; position: absolute; right: -12px; bottom: -30px; font-size: 120px; line-height: 1; opacity: .1; font-family: var(--font-family-1); }
+        .roadcast-cta h3 { margin: 0; font-family: var(--font-family-1); letter-spacing: .04em; text-transform: uppercase; font-size: clamp(38px, 8vw, 64px); line-height: .9; }
+        .roadcast-cta p { margin: 0; max-width: 780px; color: var(--primary); }
+        .roadcast-bottom-nav {
+            position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; justify-content: space-around; align-items: center;
+            padding: 6px 8px; border-top: 1px solid var(--accent-color-3); background: rgba(12, 14, 20, .94); backdrop-filter: blur(8px);
+        }
+        .roadcast-bottom-nav a { display: inline-flex; flex-direction: column; align-items: center; color: var(--text-color); font-size: 11px; text-transform: uppercase; }
+        .roadcast-bottom-nav a i { font-size: 20px; margin-bottom: 2px; }
+        .roadcast-bottom-nav a.active { color: var(--accent-color); }
+        @media (min-width: 992px) {
+            .roadcast-grid-2 { grid-template-columns: 7fr 5fr; }
+            .roadcast-episode { flex-direction: row; }
+            .roadcast-episode-media { width: 224px; min-width: 224px; }
+            .roadcast-team { grid-template-columns: repeat(4, minmax(0,1fr)); }
+            .roadcast-cta { flex-direction: row; justify-content: space-between; align-items: center; padding: 30px 24px; }
+            .roadcast-bottom-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="navbar-container">
+            <div class="hero-container">
+                <nav class="navbar navbar-expand-lg">
+        <meta name="description" content="Explore the Roadcast Series by Aura Space.">
+        <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+        <meta name="theme-color" content="#121212">
+        <link rel="canonical" href="./roadcast-series.html">
+        <meta property="og:site_name" content="Aura Space">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Roadcast Series | Aura Space Creative Production and Digital Growth">
+        <meta property="og:description" content="Explore the Roadcast Series by Aura Space.">
+        <meta property="og:image" content="./assets/images/contact-images.jpeg">
+        <meta property="og:image:alt" content="Aura Space creative production preview">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Roadcast Series | Aura Space Creative Production and Digital Growth">
+        <meta name="twitter:description" content="Explore the Roadcast Series by Aura Space.">
+        <meta name="twitter:image" content="./assets/images/contact-images.jpeg">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <div class="navbar-nav-container">
+                
+        <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
+                    <div class="logo-container">
+                        <a class="navbar-brand fw-bold" href="#">
+                            <img src="./assets/images/Auraspace Colour svg.svg" alt="Logo" class="img-fluid">
+                        </a>
+                    </div>
+                
+                    <!-- Nav Link Container -->
+                    <div class="nav-link-container">
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav mx-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./index.html">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./about.html">About Us</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Services <i class="fa-solid fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="./services.html">Service Overview</a></li>
+                                        <li><a class="dropdown-item" href="./service-detail.html">Service Detail</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        Portfolio <i class="fa-solid fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="./project.html">Showreel</a></li>
+                                        <li><a class="dropdown-item" href="./project-detail.html">Project Details</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./roadcast-series.html">Roadcast Series</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./team.html">Our Team</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+            
+                    <button class="nav-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                
+                    <!-- Navbar Social Container -->
+                    <div class="navbar-cta-container">
+                        <div>
+                            <a href="./contact.html" class="btn btn-accent">Book a Free Consultation</a>
+                        </div>
+                    </div>
+                
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Section -->
+    <aside>
+        <div class="sidebar-overlay"></div>
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="./assets/images/Auraspace Colour svg.svg" class="logo" alt="Logo">
+                </div>
+                <button class="close-btn"><span>X</span></button>
+            </div>
+            <ul class="menu">
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./about.html">About Us</a></li>
+                <li class="sidebar-dropdown">
+                    <div class="dropdown-header">
+                        <a href="#">Services</a>
+                        <button class="sidebar-dropdown-btn"><i class="fa-solid fa-angle-down"></i></button>
+                    </div>
+                    <ul class="sidebar-dropdown-menu">
+                        <li><a href="./services.html">Service Overview</a></li>
+                        <li><a href="./service-detail.html">Service Detail</a></li>
+                        
+                    </ul>
+                </li>         
+                <li class="sidebar-dropdown">
+                    <div class="dropdown-header">
+                        <a href="#">Portfolio</a>
+                        <button class="sidebar-dropdown-btn"><i class="fa-solid fa-angle-down"></i></button>
+                    </div>
+                    <ul class="sidebar-dropdown-menu">
+                        <li><a href="./project.html">Showreel</a></li>
+                        <li><a href="./project-detail.html">Project Detail</a></li>
+                    </ul>
+                </li>         
+                <li class="below-dropdown"><a href="./roadcast-series.html">Roadcast Series</a></li>
+                <li class="below-dropdown"><a href="./team.html">Our Team</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Section -->
+    <main>
+        <!-- Banner Inner Section -->
+        <section class="section banner-inner team-banner">
+            <div class="banner-overlay"></div>
+            <div class="hero-container">
+                <div class="banner-inner-container">
+                    <h2>Roadcast Series</h2>
+                    <nav class="breadcrumb">
+                        <a href="./index.html" class="breadcrumb-item">Home</a>
+                        <span class="separator">/</span>
+                        <span class="breadcrumb-item current">Roadcast Series</span>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roadcast Series content will be added here. -->
+        <section class="roadcast-wrap" id="roadcast">
+            <section>
+                <div class="roadcast-kicker">
+                    <span class="roadcast-dot"></span>
+                    <span>AuraSpace Original Series</span>
+                </div>
+                <h1 class="roadcast-title">Roadcast Series</h1>
+                <div class="roadcast-divider"></div>
+                <p class="roadcast-intro">Unfiltered conversations on wheels and on set. Raw expeditions, real creative grit.</p>
+
+                <article class="roadcast-feature">
+                    <div class="roadcast-media">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuByLowshGvODF2hfP46FUBJM36gB0RRDOSmhp8CQmOCvO-82_OTMEsutUtLtLsMOmjP7QMujqR3-Pf3Qo_x1nltMCcom0GnrKp3_BtZq_XNXrKLD0U-mHkLMjL4-J4Of5DDrOji7YF7FV7mZRjFnWFy-dUW81Bu2iMXJuKN5nwZHz0ZWJHKgvgPs69-4jCBT47iXnRbhURYcXovpZ4u_xgRZLgDBAQmoAfABpKBQYA" alt="Cinematic production camera rig mounted on a rugged matte-black off-road vehicle navigating dramatic desert sand dunes at golden hour.">
+                        <div class="roadcast-overlay"></div>
+                        <button class="roadcast-play js-play-btn" type="button" aria-label="Play featured episode"><i class="fa-solid fa-play"></i></button>
+                        <div class="roadcast-badge">
+                            <span class="dark">4K HDR</span>
+                            <span class="red">Premiere</span>
+                        </div>
+                        <span class="roadcast-time">48:22</span>
+                    </div>
+                    <div class="roadcast-meta">
+                        <div>
+                            <small>Featured Episode 01</small>
+                            <h3>Into the Dust: 800 Miles with Arri Alexa Mini LF</h3>
+                        </div>
+                        <div class="roadcast-actions">
+                            <button class="roadcast-pill" type="button"><i class="fa-solid fa-share-nodes"></i> Share</button>
+                            <button class="roadcast-pill" type="button"><i class="fa-regular fa-bookmark"></i> Watchlist</button>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="roadcast-block">
+                <div class="roadcast-grid roadcast-grid-2">
+                    <div>
+                        <div class="roadcast-kicker">
+                            <span class="roadcast-dot"></span>
+                            <span style="color: var(--accent-color);">Field Production Archive</span>
+                        </div>
+                        <h2 class="roadcast-title" style="font-size: clamp(38px, 6vw, 54px);">Stories Captured on the Run</h2>
+                        <p class="roadcast-intro" style="text-transform:none; max-width:none;">
+                            Roadcast is AuraSpace's traveling mobile broadcast lab. We strip away static corporate studios and take cinema-grade rigs onto remote highways, muddy rally trails, and grueling dawn sets. It's unscripted dialogue with directors, stunt teams, and rebel creators who refuse ordinary production pipelines.
+                        </p>
+                        <p class="roadcast-intro" style="text-transform:none; max-width:none;">
+                            Each installment is cut right inside the support vehicle between shooting locations, balancing authentic audio ambiance with high-intensity visual rhythm.
+                        </p>
+                        <div class="roadcast-attr">
+                            <article class="roadcast-card">
+                                <span><i class="fa-solid fa-video"></i> Full Frame</span>
+                                <p>Captured on dual cinema bodies with prime anamorphic glass.</p>
+                            </article>
+                            <article class="roadcast-card">
+                                <span><i class="fa-solid fa-wave-square"></i> Field Audio</span>
+                                <p>32-bit float multi-mic arrays capturing authentic roaring engines.</p>
+                            </article>
+                            <article class="roadcast-card">
+                                <span><i class="fa-solid fa-gauge-high"></i> Same-Day Cut</span>
+                                <p>Graded on DaVinci Resolve rigs powered via mobile generator.</p>
+                            </article>
+                        </div>
+                    </div>
+                    <aside class="roadcast-card">
+                        <div class="roadcast-media" style="border-radius:6px;">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBRUHAGuCIeVxEh18FV5vEnA4IMJYFuYNdMwCERt6I0W48OnQlixx5zdoMSSe02Fehqkz7hClv1iQF9m0dXwWGRPhve2LmF-3QU5UMUMSUxchDmxsB2BRcmMz8oJJCB9GB7jlWs0K4jLtH6qgBluYKshzUHZhoaH1xUDGijT1IXwPAfmORTIXBQA4mU77PPPL07ujR52hJw_w8jHuuv9BwkcWZBinbQpz-8HkG46I" alt="Interior of a customized tactical production van equipped with dual high-end color grading displays and professional sound mixers.">
+                        </div>
+                        <div style="margin-top:10px;">
+                            <span style="font-size:11px; color: var(--accent-color); text-transform: uppercase; font-weight:700;">Production Spec</span>
+                            <h4>Self-Contained Broadcast Hub</h4>
+                            <p>High-speed satellite uplink and autonomous lithium-ion generators permit 14 hours of non-stop multi-camera capture in zero-cellular wilderness environments.</p>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="roadcast-block" id="episodes">
+                <div class="roadcast-row" style="margin-bottom:12px;">
+                    <div>
+                        <div class="roadcast-kicker">
+                            <span class="roadcast-dot"></span>
+                            <span>Documentary Logs</span>
+                        </div>
+                        <h2 class="roadcast-title" style="font-size: clamp(38px, 6vw, 54px);">Episodes &amp; Field Tapes</h2>
+                    </div>
+                </div>
+
+                <div class="roadcast-grid">
+                    <article class="roadcast-episode" data-category="all season-1">
+                        <div class="roadcast-episode-media">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwKtOLm9xfmotgtZzTmtehVxNOVPbGVovksnyj3PiLJgfIRsPUacE0c-xortd5SwGNQiY_6iBS7QsdKahRbbhGB3p0Z2tJxNlXk1GnNJwxYttaL_26DR7D1xv-L7zCMxx3MF-kAKUNjm7FEcswnQIo-2AYPWqtr-hahoJ3UUjFlPHhgnzlmH4438v5sXQrFhivNjwK1KReYUopWJKWVRBTUj4V9Vh8fhQpvsvbWTk" alt="High-speed camera car tracking a red modified rally vehicle through dusty mountain switchbacks.">
+                            <button class="roadcast-play js-play-btn" type="button" aria-label="Play episode"><i class="fa-solid fa-play"></i></button>
+                            <span class="roadcast-time">41:15</span>
+                        </div>
+                        <div class="roadcast-episode-content">
+                            <div class="roadcast-row"><span class="highlight">EP 04 • Highland Trail</span><span>October 2024</span></div>
+                            <h4>The Desert Chase: Rigging High Speed Pursuit Cameras</h4>
+                            <p>Alex and the gimbal technicians push hydraulic arm stabilization to its breaking point while tracking supercars on unpaved canyon roads in 105°F heat.</p>
+                            <div class="roadcast-submeta"><span><i class="fa-regular fa-user"></i> Guest: Liam Vance (Stunt D.O.P.)</span><span>•</span><span><i class="fa-solid fa-tv"></i> 4K DCI</span></div>
+                        </div>
+                    </article>
+
+                    <article class="roadcast-episode" data-category="all season-1 behind-the-lens">
+                        <div class="roadcast-episode-media">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6eXktblKgM2Jh8eQWvHdNwv6AFmZAFrUSfdIWzPsKDTQ386fGFPyFOTS59ZlF-7XGW7_bFmtWkcEDhBXV3dYbSnITXhg9D2mOba3KZ7wpQt6XetkbxLBxPvbl6lDUbwQV1WCAcumLXBJenWZQifVa9IWcPNTusEXiY0qVRRCTTxz-s1QDGsfpQpReRM6E-VgyB37wQGUtAFM8eW2dx3oh9tDkRYrxGxPVZ818rIc" alt="Sound recordist standing in an open misty valley wearing headphones and holding a boom pole.">
+                            <button class="roadcast-play js-play-btn" type="button" aria-label="Play episode"><i class="fa-solid fa-play"></i></button>
+                            <span class="roadcast-time">52:04</span>
+                        </div>
+                        <div class="roadcast-episode-content">
+                            <div class="roadcast-row"><span class="highlight">EP 03 • Alpine Expedition</span><span>September 2024</span></div>
+                            <h4>Sound Design in the Wild: Capturing Sub-Bass at 9,000 Feet</h4>
+                            <p>Field recording masterclass with Marcus Chen navigating gale-force winds, thermal camera drift, and the acoustic physics of deep granite mountain ravines.</p>
+                            <div class="roadcast-submeta"><span><i class="fa-regular fa-user"></i> Guest: Kai Lindgren</span><span>•</span><span><i class="fa-solid fa-volume-high"></i> Dolby Atmos</span></div>
+                        </div>
+                    </article>
+
+                    <article class="roadcast-episode" data-category="all behind-the-lens">
+                        <div class="roadcast-episode-media">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwnREwdl4q9imkSOde-PopHl2i4S47Vp-BSclQuq65vW3F1KO2b_ahFY4jAz6Pzo9cLcgkbf-uWl-0l8vkWJ3i2qgzvOwkAzODY710a3RXusMgIiydM951uXYGZbbfgF_fKLIPMn-tROvrK0Gf6I3ZmcOv90OavNuPSbGTCb_o4PaPoIpT3XV5CD1msZHbbYBqTgFlzO_87IMEzRMEUzTf0ptOHRFjS1xT1p_upFE" alt="Professional video colorist working at night inside a mobile production trailer.">
+                            <button class="roadcast-play js-play-btn" type="button" aria-label="Play episode"><i class="fa-solid fa-play"></i></button>
+                            <span class="roadcast-time">37:40</span>
+                        </div>
+                        <div class="roadcast-episode-content">
+                            <div class="roadcast-row"><span class="highlight">EP 02 • Urban Nightline</span><span>August 2024</span></div>
+                            <h4>Midnight Grading: Matching Multi-Cam RAW in 6 Hours</h4>
+                            <p>Dissecting our high-pressure post-production sprint after shooting an all-night neon drag tournament. How LUT emulation and ACES preserve real dynamic shadow range.</p>
+                            <div class="roadcast-submeta"><span><i class="fa-regular fa-user"></i> Guest: Sofia Morales</span><span>•</span><span><i class="fa-solid fa-palette"></i> ACES Color</span></div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="roadcast-block" id="crew">
+                <div class="roadcast-kicker">
+                    <span class="roadcast-dot"></span>
+                    <span>Core Talent</span>
+                </div>
+                <h2 class="roadcast-title" style="font-size: clamp(38px, 6vw, 54px);">The Crew Behind the Lens</h2>
+                <p class="roadcast-intro" style="text-transform:none; max-width:none;">Seasoned cinema veterans, remote location survivalists, and uncompromising post-production leads.</p>
+
+                <div class="roadcast-team">
+                    <article class="roadcast-member">
+                        <figure><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4FV3XPk7NE283ZIZd2AXNGN0RSsuQbS_PEn1SUIs11_ouXlDO-KhyCZKUlFh_mV1x366xUbBd68dTB4wGBdMgBQfKAsL7EjfPi5-9tI2x08ftcpi60lsKuum4l5hrs0lWgxhh5p6RWSWj3lvgRGxPYPfsMqUbnH3fhoumH4aavPCkvDD7-J-ufswd_vXN83YTLACzETBft4jfCCUGYXaKDXiPyxTW3CQJfqFpq7k" alt="Alex Vance portrait"></figure>
+                        <small>Director &amp; Host</small>
+                        <h5>Alex Vance</h5>
+                        <p>Commercial automotive director with 12+ years shooting global brand campaigns.</p>
+                    </article>
+                    <article class="roadcast-member">
+                        <figure><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSDkCxrO8TanJeGYMe33RTfgNk21mGcc39cBeGBpUeVePNlUz2odJkz5jGX8Gi_nM9ibJTFINnqkf6YMvJomX7zRaMP85sJ_p-91gXMrE9V2yFgZBOyBxmwTAbq8fCtsuHUg6_pNqzvLR14mY04Jv-xSc8DLrAa-eHsvPpXh5AmY6itDxzz5JtG16TaU27Pqk9qsBKDOVF60uL7LbskTEUQrDEVGlfa1SK9NF3SAY" alt="Elena Rostova portrait"></figure>
+                        <small>D.O.P. &amp; Cinematographer</small>
+                        <h5>Elena Rostova</h5>
+                        <p>Documentary cinematographer specializing in extreme low-light and chase-car framing.</p>
+                    </article>
+                    <article class="roadcast-member">
+                        <figure><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDbGOB9kk-muzI1E_TkpUp7nzKe5tYtwFVyBwXTNYdXR1d5dIXVxxxGJIVOj8YeeAKO0SIe6EEQbYd70iBRv818i2wSlbksijmEOijanMiX80MwBmY5scNEKdHJ8rsNGntK4upMzq45p0fBvKSMGwV1Wiyl7y4MosSxmHAqbhbASPnbbN1dxm3U8bazvsiinYv0oiZ8H3dnDaRi0_y73GwvK-3Vxitn01cs-tH6_A" alt="Marcus Chen portrait"></figure>
+                        <small>Sound Designer</small>
+                        <h5>Marcus Chen</h5>
+                        <p>Acoustic engineer focused on binaural environmental recording and high-impact SFX.</p>
+                    </article>
+                    <article class="roadcast-member">
+                        <figure><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA8xGdl9wd-O_vIttJ9Rgiuk_cobapbBEgg0Gjiis9QSxtWQNp4aKIpfGMY4H0YSoe6_lXJU2wCRQeBXVQMK9FHgsEsPwcfkUsmkcEMh3iHy-H3-tygVzTvQE4dFr22f5Jlbj8qtVKNloT5hs7ZyuTOPAQuVi1g2C9JfbdpPoeV6GZiN_Mufb7wNQ6xyVh5lvYY9fYP22d2lQE9PLiQcBjAxWTYmU4kk72UY2U1MI" alt="Sofia Morales portrait"></figure>
+                        <small>Lead Colorist &amp; Edit</small>
+                        <h5>Sofia Morales</h5>
+                        <p>Award-winning narrative editor known for surgical pacing and heavy photochemical color emulation.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="roadcast-cta" id="consultation">
+                <div>
+                    <span style="font-size:12px; text-transform:uppercase; letter-spacing:.09em; color:rgba(255,255,255,.82);">Want to Feature Your Production?</span>
+                    <h3>Ready to Film Your Next Project?</h3>
+                    <p>From full-length documentary series to high-octane commercial content, AuraSpace engineers the entire cinematic pipeline.</p>
+                </div>
+                <div>
+                    <a href="./contact.html" class="btn btn-accent-primary">
+                        Free Consultation
+                    </a>
+                </div>
+            </section>
+        </section>
+    </main>
+    <nav class="roadcast-bottom-nav">
+        <a class="active" href="#roadcast"><i class="fa-solid fa-circle-play"></i><span>Roadcast</span></a>
+        <a href="#episodes"><i class="fa-solid fa-photo-film"></i><span>Episodes</span></a>
+        <a href="#crew"><i class="fa-solid fa-users"></i><span>Crew</span></a>
+        <a href="#consultation"><i class="fa-solid fa-comment-dots"></i><span>Contact</span></a>
+    </nav>
+    <!-- Footer Section -->
+    <footer>
+        <div class="section-footer">
+            <div class="hero-container">
+                <div class="footer-container">
+                    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 grid-spacer-3">
+                        <div class="col col-lg-3 col-md-6">
+                            <div class="d-flex flex-column gspace-2">
+                                <h3>Aura Space - Creative Production and Digital Growth</h3>
+                                <div class="d-flex flex-column gspace-1">
+                                    <h5>Our Office</h5>
+                                    <div class="footer-info-container">
+                                        <span class="footer-info">Pakistan</span>
+                                    </div>
+                                    <div class="footer-info-container">
+                                        <h5>Contact Us</h5>
+                                            <span class="footer-info">03226355078</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-lg-3 col-md-6">
+                            <div class="d-flex flex-column gspace-3">
+                                <h4>Navigation</h4>
+                                <ul class="chevron-circle-list">
+                                    <li><a href="./index.html">Home</a></li>
+                                    <li><a href="./about.html">About Us</a></li>
+                                    <li><a href="./services.html">Services</a></li>
+                                    <li><a href="./project.html">Portfolio</a></li>
+                                    <li><a href="./team.html">Our Team</a></li>
+                                    <li><a href="./contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col col-lg-6 col-md-12">
+                            <div class="d-flex flex-column gspace-3">
+                                <div class="d-flex flex-row gspace-1 align-items-center w-100 justify-content-between flex-wrap">
+                                    <h5>Social Media</h5>
+                                    <div class="social-footer-container">
+                                        <a href="https://www.instagram.com/" class="footer-icon">
+                                            <i class="fa-brands fa-instagram"></i>
+                                        </a>
+                                        <a href="https://www.facebook.com/" class="footer-icon">
+                                            <i class="fa-brands fa-facebook"></i>
+                                        </a>
+                                        <a href="https://www.x.com/" class="footer-icon">
+                                            <i class="fa-brands fa-x-twitter"></i>
+                                        </a>
+                                        <a href="https://www.youtube.com/" class="footer-icon">
+                                            <i class="fa-brands fa-youtube"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-title-container">
+                        <span class="footer-title">Aura Space</span>
+                    </div>
+                    <div class="footer-copyright-container">
+                        <a href="#" class="legallink">Privacy Policy</a>
+                        <span class="copyright">Â© 2026 Aura Space. All rights reserved.</span>
+                        <a href="#" class="legallink">Terms & Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script defer src="./assets/js/vendor/jquery.min.js"></script>
+    <script defer src="./assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script defer src="./assets/js/vendor/swiper-bundle.min.js"></script>
+    <script defer src="./assets/js/script.js"></script>
+    <script defer src="./assets/js/swiper-script.js"></script>
+    <script defer src="./assets/js/submit-form.js"></script>
+    <script defer src="./assets/js/video_embedded.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var playButtons = document.querySelectorAll(".js-play-btn");
+            playButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    button.style.transform = "scale(0.92)";
+                    window.setTimeout(function () {
+                        button.style.transform = "";
+                    }, 120);
+                });
+            });
+
+            var bottomNavLinks = document.querySelectorAll(".roadcast-bottom-nav a");
+            bottomNavLinks.forEach(function (link) {
+                link.addEventListener("click", function () {
+                    bottomNavLinks.forEach(function (item) { item.classList.remove("active"); });
+                    link.classList.add("active");
+                });
+            });
+        });
+    </script>
+</body>
+</html>
