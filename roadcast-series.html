@@ -79,20 +79,12 @@
         .roadcast-cta::after { content: "AURA"; position: absolute; right: -12px; bottom: -30px; font-size: 120px; line-height: 1; opacity: .1; font-family: var(--font-family-1); }
         .roadcast-cta h3 { margin: 0; font-family: var(--font-family-1); letter-spacing: .04em; text-transform: uppercase; font-size: clamp(38px, 8vw, 64px); line-height: .9; }
         .roadcast-cta p { margin: 0; max-width: 780px; color: var(--primary); }
-        .roadcast-bottom-nav {
-            position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; justify-content: space-around; align-items: center;
-            padding: 6px 8px; border-top: 1px solid var(--accent-color-3); background: rgba(12, 14, 20, .94); backdrop-filter: blur(8px);
-        }
-        .roadcast-bottom-nav a { display: inline-flex; flex-direction: column; align-items: center; color: var(--text-color); font-size: 11px; text-transform: uppercase; }
-        .roadcast-bottom-nav a i { font-size: 20px; margin-bottom: 2px; }
-        .roadcast-bottom-nav a.active { color: var(--accent-color); }
         @media (min-width: 992px) {
             .roadcast-grid-2 { grid-template-columns: 7fr 5fr; }
             .roadcast-episode { flex-direction: row; }
             .roadcast-episode-media { width: 224px; min-width: 224px; }
             .roadcast-team { grid-template-columns: repeat(4, minmax(0,1fr)); }
             .roadcast-cta { flex-direction: row; justify-content: space-between; align-items: center; padding: 30px 24px; }
-            .roadcast-bottom-nav { display: none; }
         }
     </style>
 </head>
@@ -425,12 +417,6 @@
             </section>
         </section>
     </main>
-    <nav class="roadcast-bottom-nav">
-        <a class="active" href="#roadcast"><i class="fa-solid fa-circle-play"></i><span>Roadcast</span></a>
-        <a href="#episodes"><i class="fa-solid fa-photo-film"></i><span>Episodes</span></a>
-        <a href="#crew"><i class="fa-solid fa-users"></i><span>Crew</span></a>
-        <a href="#consultation"><i class="fa-solid fa-comment-dots"></i><span>Contact</span></a>
-    </nav>
     <!-- Footer Section -->
     <footer>
         <div class="section-footer">
@@ -519,13 +505,6 @@
                 });
             });
 
-            var bottomNavLinks = document.querySelectorAll(".roadcast-bottom-nav a");
-            bottomNavLinks.forEach(function (link) {
-                link.addEventListener("click", function () {
-                    bottomNavLinks.forEach(function (item) { item.classList.remove("active"); });
-                    link.classList.add("active");
-                });
-            });
         });
     </script>
 </body>
