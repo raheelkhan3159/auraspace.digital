@@ -28,10 +28,22 @@
             text-transform: uppercase;
             color: var(--primary);
         }
+        .roadcast-title--statement {
+            font-size: clamp(32px, 5vw, 58px);
+            line-height: 1.05;
+            letter-spacing: .03em;
+            color: var(--text-color);
+        }
+        .roadcast-title--statement + .roadcast-title--statement { margin-top: 6px; }
         .roadcast-divider { width: 64px; height: 4px; background: var(--accent-color); margin: 12px 0 14px; }
         .roadcast-intro { max-width: 700px; color: var(--text-color); font-size: 16px; line-height: 1.5; text-transform: uppercase; }
+        .roadcast-intro--lead { margin-top: 24px; text-transform: none; }
+        .roadcast-conversation-intro { margin-top: 24px; }
+        .roadcast-episodes-intro { margin-top: 16px; text-transform: none; }
+        .roadcast-team-intro { margin-top: 24px; }
         .roadcast-feature { border: 1px solid var(--accent-color-3); border-radius: 0; overflow: hidden; margin-top: 20px; box-shadow: 0 0 28px rgba(229, 9, 20, .28); background: var(--accent-color-5); }
         .roadcast-media { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+        .roadcast-media iframe { width: 100%; height: 100%; display: block; border: 0; }
         .roadcast-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
         .roadcast-media:hover img { transform: scale(1.05); }
         .roadcast-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,0) 45%); }
@@ -49,6 +61,12 @@
         .roadcast-badge .red { background: var(--accent-color); color: var(--primary); }
         .roadcast-time { position: absolute; right: 12px; bottom: 12px; background: rgba(0,0,0,.78); color: var(--primary); border: 1px solid rgba(255,255,255,.16); z-index: 2; }
         .roadcast-meta { display: flex; gap: 14px; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; padding: 20px; background: var(--accent-color-5); border-top: 1px solid var(--accent-color-3); }
+        .roadcast-feature-details { width: 100%; }
+        .roadcast-feature-details h3 { margin-top: 12px; }
+        .roadcast-feature-details p { max-width: 760px; margin: 14px 0 0; color: var(--text-color); font-size: 20px; line-height: 1.45; }
+        .roadcast-feature-description { width: 100%; max-width: none !important; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+        .roadcast-read-more { margin-top: 8px; padding: 0; border: 0; background: none; color: var(--accent-color); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+        .roadcast-feature-description.is-expanded { display: block; }
         .roadcast-meta small { color: var(--accent-color); font-weight: 700; letter-spacing: .05em; }
         .roadcast-meta h3 { margin: 4px 0 0; color: var(--primary); font-size: clamp(18px, 2vw, 24px); line-height: 1.25; text-transform: uppercase; }
         .roadcast-actions { display: flex; gap: 8px; }
@@ -224,11 +242,11 @@
             <div class="banner-overlay"></div>
             <div class="hero-container">
                 <div class="banner-inner-container">
-                    <h2>Roadcast Series</h2>
+                    <h2>RODCAST SERIES</h2>
                     <nav class="breadcrumb">
                         <a href="./index.html" class="breadcrumb-item">Home</a>
                         <span class="separator">/</span>
-                        <span class="breadcrumb-item current">Roadcast Series</span>
+                        <span class="breadcrumb-item current">Rodcast</span>
                     </nav>
                 </div>
             </div>
@@ -241,29 +259,31 @@
                     <span class="roadcast-dot"></span>
                     <span>AuraSpace Original Series</span>
                 </div>
-                <h1 class="roadcast-title">Roadcast Series</h1>
+                <h1 class="roadcast-title">RODCAST SERIES</h1>
                 <div class="roadcast-divider"></div>
-                <p class="roadcast-intro">Unfiltered conversations on wheels and on set. Raw expeditions, real creative grit.</p>
+                <h2 class="roadcast-title roadcast-title--statement">THE QUESTIONS PEOPLE WANT TO ASK.</h2>
+                <h2 class="roadcast-title roadcast-title--statement">THE STORIES PEOPLE WANT TO HEAR.</h2>
+
+                <p class="roadcast-intro roadcast-intro--lead">Real conversations, recorded where life happens. We meet our guests at their homes, workplaces, and beyond to ask the questions people are curious about and uncover the stories behind their journeys.</p>
 
                 <article class="roadcast-feature">
                     <div class="roadcast-media">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuByLowshGvODF2hfP46FUBJM36gB0RRDOSmhp8CQmOCvO-82_OTMEsutUtLtLsMOmjP7QMujqR3-Pf3Qo_x1nltMCcom0GnrKp3_BtZq_XNXrKLD0U-mHkLMjL4-J4Of5DDrOji7YF7FV7mZRjFnWFy-dUW81Bu2iMXJuKN5nwZHz0ZWJHKgvgPs69-4jCBT47iXnRbhURYcXovpZ4u_xgRZLgDBAQmoAfABpKBQYA" alt="Cinematic production camera rig mounted on a rugged matte-black off-road vehicle navigating dramatic desert sand dunes at golden hour.">
-                        <div class="roadcast-overlay"></div>
-                        <button class="roadcast-play js-play-btn" type="button" aria-label="Play featured episode"><i class="fa-solid fa-play"></i></button>
-                        <div class="roadcast-badge">
-                            <span class="dark">4K HDR</span>
-                            <span class="red">Premiere</span>
-                        </div>
-                        <span class="roadcast-time">48:22</span>
+                        <iframe src="https://www.youtube.com/embed/wooynkFE-Cw?si=39k8YWO0DxeTc5mV" title="The Desert Chase: Rigging High Speed Pursuit Cameras" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                     <div class="roadcast-meta">
-                        <div>
-                            <small>Featured Episode 01</small>
-                            <h3>Into the Dust: 800 Miles with Arri Alexa Mini LF</h3>
-                        </div>
-                        <div class="roadcast-actions">
-                            <button class="roadcast-pill" type="button"><i class="fa-solid fa-share-nodes"></i> Share</button>
-                            <button class="roadcast-pill" type="button"><i class="fa-regular fa-bookmark"></i> Watchlist</button>
+                        <div class="roadcast-feature-details">
+                            <div class="roadcast-row">
+                                <span class="highlight">EP 04 • Politics </span>
+                                <span>23-Oct-2026</span>
+                            </div>
+                            <h3>Governor Raj Aur PTI: Inayatullah Khan Ka Intehai Ahem Inkishaf | Roadcast</h3>
+                            <p class="roadcast-feature-description">Roadcast ke is exclusive session mein Ameer-e-Jamaat-e-Islami KP (North) aur sabaq senior minister Inayatullah Khan ne mojooda siyasi surat-e-haal par khul kar baat ki. Unhon ne yeh ahem sawaal uthaya ke:"Hum PTI ka saath kyun dein? Governor Raj lagne se PTI ki hukumat khatam hui hai, Jamaat-e-Islami ki nahi. Hum sadkon par kyun niklein?" KPK ki politics aur JI ke aindah laye-e-amal ko samajhne ke liye video ko aakhir tak zaroor dekhein!</p>
+                            <button class="roadcast-read-more" type="button" aria-expanded="false">Read more</button>
+                            <div class="roadcast-submeta">
+                                <span><i class="fa-regular fa-user"></i> Guest: Inayatullah Khan (Ameer-e-Jamaat-e-Islami KP (North) - Ex Minister)</span>
+                                <span>•</span>
+                                <span><i class="fa-solid fa-display"></i> 4K DCI</span>
+                            </div>
                         </div>
                     </div>
                 </article>
@@ -274,27 +294,30 @@
                     <div>
                         <div class="roadcast-kicker">
                             <span class="roadcast-dot"></span>
-                            <span style="color: var(--accent-color);">Field Production Archive</span>
+                            <span style="color: var(--accent-color);">BEHIND THE CONVERSATION</span>
                         </div>
-                        <h2 class="roadcast-title" style="font-size: clamp(38px, 6vw, 54px);">Stories Captured on the Run</h2>
-                        <p class="roadcast-intro" style="text-transform:none; max-width:none;">
-                            Roadcast is AuraSpace's traveling mobile broadcast lab. We strip away static corporate studios and take cinema-grade rigs onto remote highways, muddy rally trails, and grueling dawn sets. It's unscripted dialogue with directors, stunt teams, and rebel creators who refuse ordinary production pipelines.
+                        <h2 class="roadcast-title" style="font-size: clamp(38px, 6vw, 54px);">NOT EVERY GREAT CONVERSATION HAPPENS IN A STUDIO.</h2>
+                        <p class="roadcast-intro roadcast-conversation-intro" style="text-transform:none; max-width:none;">
+                            We don't wait for interesting people to come to us. We take Rodcast to them.
                         </p>
                         <p class="roadcast-intro" style="text-transform:none; max-width:none;">
-                            Each installment is cut right inside the support vehicle between shooting locations, balancing authentic audio ambiance with high-intensity visual rhythm.
+                            Whether it's a home, an office, a workplace, or somewhere unexpected, we bring the cameras, microphones, and recording setup needed to create a professional podcast experience in their own environment.
+                        </p>
+                        <p class="roadcast-intro" style="text-transform:none; max-width:none;">
+                            The result? More natural conversations, familiar surroundings, and stories told where they actually happen.
                         </p>
                         <div class="roadcast-attr">
                             <article class="roadcast-card">
-                                <span><i class="fa-solid fa-video"></i> Full Frame</span>
-                                <p>Captured on dual cinema bodies with prime anamorphic glass.</p>
+                                <span><i class="fa-solid fa-video"></i>Cinematic Picture Quality</span>
+                                <p>Professional camera setups and carefully planned shots capture every conversation with clarity and detail.</p>
                             </article>
                             <article class="roadcast-card">
-                                <span><i class="fa-solid fa-wave-square"></i> Field Audio</span>
-                                <p>32-bit float multi-mic arrays capturing authentic roaring engines.</p>
+                                <span><i class="fa-solid fa-wave-square"></i>Clear, Detailed Sound</span>
+                                <p>Quality audio equipment helps capture every question, answer, and important detail without losing the natural feel of the conversation.</p>
                             </article>
                             <article class="roadcast-card">
-                                <span><i class="fa-solid fa-gauge-high"></i> Same-Day Cut</span>
-                                <p>Graded on DaVinci Resolve rigs powered via mobile generator.</p>
+                                <span><i class="fa-solid fa-gauge-high"></i>Ready to Record Anywhere</span>
+                                <p>A mobile recording setup allows us to create professional recording environments beyond traditional studios.</p>
                             </article>
                         </div>
                     </div>
@@ -303,9 +326,9 @@
                             <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBRUHAGuCIeVxEh18FV5vEnA4IMJYFuYNdMwCERt6I0W48OnQlixx5zdoMSSe02Fehqkz7hClv1iQF9m0dXwWGRPhve2LmF-3QU5UMUMSUxchDmxsB2BRcmMz8oJJCB9GB7jlWs0K4jLtH6qgBluYKshzUHZhoaH1xUDGijT1IXwPAfmORTIXBQA4mU77PPPL07ujR52hJw_w8jHuuv9BwkcWZBinbQpz-8HkG46I" alt="Interior of a customized tactical production van equipped with dual high-end color grading displays and professional sound mixers.">
                         </div>
                         <div style="margin-top:10px;">
-                            <span style="font-size:11px; color: var(--accent-color); text-transform: uppercase; font-weight:700;">Production Spec</span>
-                            <h4>Self-Contained Broadcast Hub</h4>
-                            <p>High-speed satellite uplink and autonomous lithium-ion generators permit 14 hours of non-stop multi-camera capture in zero-cellular wilderness environments.</p>
+                            <span style="font-size:11px; color: var(--accent-color); text-transform: uppercase; font-weight:700;">ON-LOCATION PRODUCTION</span>
+                            <h4>A COMPLETE RECORDING SETUP. WHEREVER THE STORY TAKES US.</h4>
+                            <p>From camera placement and lighting to audio recording and monitoring, our production team brings the essential equipment to the guest's location. We handle the technical setup so the focus stays on the conversation.</p>
                         </div>
                     </aside>
                 </div>
@@ -316,9 +339,10 @@
                     <div>
                         <div class="roadcast-kicker">
                             <span class="roadcast-dot"></span>
-                            <span>Documentary Logs</span>
+                            <span>THE CONVERSATIONS</span>
                         </div>
-                        <h2 class="roadcast-title" style="font-size: clamp(38px, 6vw, 54px);">Episodes &amp; Field Tapes</h2>
+                        <h2 class="roadcast-title" style="font-size: clamp(38px, 6vw, 54px);">EVERY EPISODE HAS A STORY TO TELL.</h2>
+                        <p class="roadcast-intro roadcast-episodes-intro">Different people. Different perspectives. Different questions. Explore our conversations and discover the experiences, ideas, and stories worth hearing.</p>
                     </div>
                 </div>
 
@@ -370,44 +394,74 @@
             <section class="roadcast-block" id="crew">
                 <div class="roadcast-kicker">
                     <span class="roadcast-dot"></span>
-                    <span>Core Talent</span>
+                    <span>MEET THE TEAM</span>
                 </div>
-                <h2 class="roadcast-title" style="font-size: clamp(38px, 6vw, 54px);">The Crew Behind the Lens</h2>
-                <p class="roadcast-intro" style="text-transform:none; max-width:none;">Seasoned cinema veterans, remote location survivalists, and uncompromising post-production leads.</p>
+                <h2 class="roadcast-title" style="font-size: clamp(38px, 6vw, 54px);">THE PEOPLE BEHIND EVERY CONVERSATION.</h2>
+                <p class="roadcast-intro roadcast-team-intro" style="text-transform:none; max-width:none;">From the first question to the final edit, our team works together to bring every Rodcast episode to life. Meet the people behind the cameras, sound, production, and conversations.</p>
 
                 <div class="roadcast-team">
                     <article class="roadcast-member">
-                        <figure><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4FV3XPk7NE283ZIZd2AXNGN0RSsuQbS_PEn1SUIs11_ouXlDO-KhyCZKUlFh_mV1x366xUbBd68dTB4wGBdMgBQfKAsL7EjfPi5-9tI2x08ftcpi60lsKuum4l5hrs0lWgxhh5p6RWSWj3lvgRGxPYPfsMqUbnH3fhoumH4aavPCkvDD7-J-ufswd_vXN83YTLACzETBft4jfCCUGYXaKDXiPyxTW3CQJfqFpq7k" alt="Alex Vance portrait"></figure>
-                        <small>Director &amp; Host</small>
-                        <h5>Alex Vance</h5>
-                        <p>Commercial automotive director with 12+ years shooting global brand campaigns.</p>
+                        <figure><img src="https://images.openai.com/static-rsc-4/Uqwtz7ZASwUiN9LLb8GON6CAwrwUxEhh4BGZYqplZcK4pCMQfPehL6aOIMghyGNKeMf3wU4xO_d8ehmOZ1vVh3mcj-k7JDe7ETb4gQ9qWMsjXeAhZx-NS7Bd6smvcH2G79GIt0Ga1pkDYfF220FUvI8DFTxYQwf95HLTT_uBv3c?purpose=inline" alt="Host and interviewer recording an interview"></figure>
+                        <small>Host & Interviewer</small>
+                        <h5>Maroof Mahmood</h5>
+                        <p>Leads conversations, asks meaningful questions, engages guests, and makes every episode interesting for the audience.</p>
                     </article>
                     <article class="roadcast-member">
-                        <figure><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSDkCxrO8TanJeGYMe33RTfgNk21mGcc39cBeGBpUeVePNlUz2odJkz5jGX8Gi_nM9ibJTFINnqkf6YMvJomX7zRaMP85sJ_p-91gXMrE9V2yFgZBOyBxmwTAbq8fCtsuHUg6_pNqzvLR14mY04Jv-xSc8DLrAa-eHsvPpXh5AmY6itDxzz5JtG16TaU27Pqk9qsBKDOVF60uL7LbskTEUQrDEVGlfa1SK9NF3SAY" alt="Elena Rostova portrait"></figure>
-                        <small>D.O.P. &amp; Cinematographer</small>
-                        <h5>Elena Rostova</h5>
-                        <p>Documentary cinematographer specializing in extreme low-light and chase-car framing.</p>
+                        <figure><img src="https://images.openai.com/static-rsc-4/akMyFjVHk7tyB4riw--SgJAogyEXU9CidH_iwGyfASaeBZaQTflp-6c78b2HZAHXuIFsasz4WjyOniAm__B70Pn3BnvFxji8kaQK9s5cEB1DWMKW6DfffPR2opjN2lZ8rzbNyVTYIikzubnrWdmDOq62YadDEBOcRz7-SkKsVo4?purpose=inline" alt="Production manager coordinating a video shoot"></figure>
+                        <small>Production Manager</small>
+                        <h5>Qamar Hayat</h5>
+                        <p>Coordinates recording schedules, manages the production team, organizes equipment, and ensures smooth on-location shoots.</p>
                     </article>
                     <article class="roadcast-member">
-                        <figure><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDbGOB9kk-muzI1E_TkpUp7nzKe5tYtwFVyBwXTNYdXR1d5dIXVxxxGJIVOj8YeeAKO0SIe6EEQbYd70iBRv818i2wSlbksijmEOijanMiX80MwBmY5scNEKdHJ8rsNGntK4upMzq45p0fBvKSMGwV1Wiyl7y4MosSxmHAqbhbASPnbbN1dxm3U8bazvsiinYv0oiZ8H3dnDaRi0_y73GwvK-3Vxitn01cs-tH6_A" alt="Marcus Chen portrait"></figure>
-                        <small>Sound Designer</small>
-                        <h5>Marcus Chen</h5>
-                        <p>Acoustic engineer focused on binaural environmental recording and high-impact SFX.</p>
+                        <figure><img src="https://images.openai.com/static-rsc-4/r1YVrDbMZ54oeWXl_bemEBPrmdpMD5XV0vRMes74fmgkpKXI9gHlQ24x_c4UXMJ4IQLVV_g7fD8iEgrZScN02t9vYVivoDFHlZ3qIazXtnBHNoHVWm4jXTGg-OXSa5Ls4-3B4j_bqjF-ml4mlxffryHws7v_62xlE9-CTExUHlE?purpose=inline" alt="Lead videographer filming a scene"></figure>
+                        <small>Lead Videographer</small>
+                        <h5>Razzaq Masih</h5>
+                        <p>Oversees camera work, framing, and visual storytelling while maintaining the overall visual quality of each episode.</p>
                     </article>
                     <article class="roadcast-member">
-                        <figure><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA8xGdl9wd-O_vIttJ9Rgiuk_cobapbBEgg0Gjiis9QSxtWQNp4aKIpfGMY4H0YSoe6_lXJU2wCRQeBXVQMK9FHgsEsPwcfkUsmkcEMh3iHy-H3-tygVzTvQE4dFr22f5Jlbj8qtVKNloT5hs7ZyuTOPAQuVi1g2C9JfbdpPoeV6GZiN_Mufb7wNQ6xyVh5lvYY9fYP22d2lQE9PLiQcBjAxWTYmU4kk72UY2U1MI" alt="Sofia Morales portrait"></figure>
-                        <small>Lead Colorist &amp; Edit</small>
-                        <h5>Sofia Morales</h5>
-                        <p>Award-winning narrative editor known for surgical pacing and heavy photochemical color emulation.</p>
+                        <figure><img src="https://images.openai.com/static-rsc-4/r1YVrDbMZ54oeWXl_bemEBPrmdpMD5XV0vRMes74fmgkpKXI9gHlQ24x_c4UXMJ4IQLVV_g7fD8iEgrZScN02t9vYVivoDFHlZ3qIazXtnBHNoHVWm4jXTGg-OXSa5Ls4-3B4j_bqjF-ml4mlxffryHws7v_62xlE9-CTExUHlE?purpose=inline" alt="Videographer operating a camera"></figure>
+                        <small>Videographer – Camera Operator</small>
+                        <h5>Jalal Amin</h5>
+                        <p>Captures the main interview footage, ensuring clear shots, proper framing, and consistent camera movement.</p>
+                    </article>
+                    <article class="roadcast-member">
+                        <figure><img src="https://images.openai.com/static-rsc-4/x9b926jzFlESwcijOPpc0sWK58s-k7M2PHOBz_QKjxwEHZGbUmmfAnfD7BUE2TpaqXpxb6vHA8FNPl1CrUIvA5Ip_U-z-iDnDo92eAPzGJlegJmAsXWrPMcBIvbpESyX7Pu-TEY4hz4pNmHcjOYmPKydsagDPIWKPGQS9DBC4EA?purpose=inline" alt="Videographer capturing a secondary camera angle"></figure>
+                        <small>Videographer – Secondary Camera</small>
+                        <h5>Muhammad Mustafa</h5>
+                        <p>Captures alternative angles, guest reactions, close-ups, and behind-the-scenes footage to add depth to each episode.</p>
+                    </article>
+                    <article class="roadcast-member">
+                        <figure><img src="https://images.openai.com/static-rsc-4/pN--djXTy7ghBp27hj-b1lCI3PfQ4HC27PEMyW7oWtKqhc0FEBI9sOyQExZo_kK3S8cyfwx4CkiMh-vCZsQ2gBMXYYwPOd6dsOr-Btb2F8mIA8QAsDVLg33aWXmMWmiPTLHwFF0Wdqob8Vhuy70Qv2PbNTO8Fayo-H5SnA1TL48?purpose=inline" alt="Audio engineer recording a podcast"></figure>
+                        <small>Audio Engineer</small>
+                        <h5>Sadaqat Mehmood</h5>
+                        <p>Manages microphones, audio recording, and sound quality to ensure every question and answer is captured clearly.</p>
+                    </article>
+                    <article class="roadcast-member">
+                        <figure><img src="https://images.openai.com/static-rsc-4/8xJRk5Yz4A_L0Y2ouecaWSBfczjyyAprs3BQAHMTa089MgeZfOIwrwVXRjOnrbrxm7Iz5nNCoU4yIDcRNeXTo_Eir2bbHJf3HlBCeXgDpe8RBImxTJBI-uzD48SBy2hW5KprERKdBaDip9V6KFajUBPcG58RlrrcJNaGBR-997g?purpose=inline" alt="Lighting technician adjusting a studio light"></figure>
+                        <small>Lighting Technician</small>
+                        <h5>Asad Ullah Durrani</h5>
+                        <p>Sets up and adjusts lighting to create a balanced, professional look across different recording environments.</p>
+                    </article>
+                    <article class="roadcast-member">
+                        <figure><img src="https://images.openai.com/static-rsc-4/x9b926jzFlESwcijOPpc0sWK58s-k7M2PHOBz_QKjxwEHZGbUmmfAnfD7BUE2TpaqXpxb6vHA8FNPl1CrUIvA5Ip_U-z-iDnDo92eAPzGJlegJmAsXWrPMcBIvbpESyX7Pu-TEY4hz4pNmHcjOYmPKydsagDPIWKPGQS9DBC4EA?purpose=inline" alt="Video editor working on an episode"></figure>
+                        <small>Video Editor</small>
+                        <h5>Maaz Ullah Anwar</h5>
+                        <p>Edits recorded footage, synchronizes audio, selects the best moments, and creates the final episode.</p>
+                    </article>
+                    <article class="roadcast-member">
+                        <figure><img src="https://images.openai.com/static-rsc-4/_6L5fW1lsJXOt5j5UXCBFDHmCwkKOT195u6nS6pVJFeQ8R4N9tWl2c4lE7Dns4PZ6qHG8y2GV-DWl_r-XU2tGqudhj5epR7eOtKXS8FDa8Y5KTeND0BOzUbif-ubdbBiH0R5seEUJxi_xPGxx39i6VHFJfSrvMdp0O45ZvwJX7w?purpose=inline" alt="Content researcher developing episode ideas"></figure>
+                        <small>Content Researcher</small>
+                        <h5>Ahmad Abdullah</h5>
+                        <p>Researches guests, prepares interview questions, identifies interesting discussion topics, and helps develop episode concepts.</p>
                     </article>
                 </div>
             </section>
 
             <section class="roadcast-cta" id="consultation">
                 <div>
-                    <span style="font-size:12px; text-transform:uppercase; letter-spacing:.09em; color:rgba(255,255,255,.82);">Want to Feature Your Production?</span>
-                    <h3>Ready to Film Your Next Project?</h3>
-                    <p>From full-length documentary series to high-octane commercial content, AuraSpace engineers the entire cinematic pipeline.</p>
+                    <span style="font-size:12px; text-transform:uppercase; letter-spacing:.09em; color:rgba(255,255,255,.82);">HAVE A STORY WORTH TELLING?</span>
+                    <h3>LET'S BRING YOUR NEXT BIG IDEA TO LIFE.</h3>
+                    <p>From podcasts and documentaries to commercial films and creative productions, Aura Space Digital brings the people, equipment, and expertise to make your vision happen.</p>
                 </div>
                 <div>
                     <a href="./contact.html" class="btn btn-accent-primary">
@@ -447,6 +501,7 @@
                                     <li><a href="./services.html">Services</a></li>
                                     <li><a href="./project.html">Portfolio</a></li>
                                     <li><a href="./team.html">Our Team</a></li>
+                                    <li><a href="./roadcast-series.html">Roadcast Series</a></li>
                                     <li><a href="./contact.html">Contact</a></li>
                                 </ul>
                             </div>
@@ -478,7 +533,7 @@
                     </div>
                     <div class="footer-copyright-container">
                         <a href="#" class="legallink">Privacy Policy</a>
-                        <span class="copyright">Â© 2026 Aura Space. All rights reserved.</span>
+                        <span class="copyright">© 2026 Aura Space. All rights reserved.</span>
                         <a href="#" class="legallink">Terms & Conditions</a>
                     </div>
                 </div>
@@ -502,6 +557,17 @@
                     window.setTimeout(function () {
                         button.style.transform = "";
                     }, 120);
+                });
+            });
+
+            var readMoreButtons = document.querySelectorAll(".roadcast-read-more");
+            readMoreButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var description = button.previousElementSibling;
+                    var expanded = button.getAttribute("aria-expanded") === "true";
+                    description.classList.toggle("is-expanded", !expanded);
+                    button.setAttribute("aria-expanded", String(!expanded));
+                    button.textContent = expanded ? "Read more" : "Read less";
                 });
             });
 
